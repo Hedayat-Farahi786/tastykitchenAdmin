@@ -6,7 +6,7 @@ import credit from "../../assets/images/credit.png";
 import paypal from "../../assets/images/paypal.png";
 import io from "socket.io-client";
 
-const socket = io("https://tasty-kitchen-socket.vercel.app", {
+const socket = io("http://localhost:5000", {
   transports: ["websocket", "polling"], // Explicitly use WebSocket transport
   reconnectionAttempts: 5,
   timeout: 20000,
@@ -16,19 +16,19 @@ const socket = io("https://tasty-kitchen-socket.vercel.app", {
 const ProjectTables = () => {
   const [tableData, setTableData] = useState([]);
 
-  // useEffect(() => {
-  //   // Listen for notifications from WebSocket server
-  //   socket.on("new_order", (data) => {
-  //     fetch("https://tastykitchen-backend.vercel.app/orders/dashboardOrders") // Replace with your actual endpoint
-  //       .then((response) => response.json())
-  //       .then((data) => setTableData(data))
-  //       .catch((error) => console.error("Error fetching data:", error));
-  //   });
+  useEffect(() => {
+    // Listen for notifications from WebSocket server
+    socket.on("new_order", (data) => {
+      fetch("https://tastykitchen-backend.vercel.app/orders/dashboardOrders") // Replace with your actual endpoint
+        .then((response) => response.json())
+        .then((data) => setTableData(data))
+        .catch((error) => console.error("Error fetching data:", error));
+    });
 
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     // Fetch data from the API

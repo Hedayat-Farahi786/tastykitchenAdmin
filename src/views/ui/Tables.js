@@ -21,7 +21,7 @@ import credit from "../../assets/images/credit.png";
 import paypal from "../../assets/images/paypal.png";
 import io from "socket.io-client";
 
-const socket = io("https://tasty-kitchen-socket.vercel.app", {
+const socket = io("http://localhost:5000", {
   transports: ["websocket", "polling"], // Explicitly use WebSocket transport
   reconnectionAttempts: 5,
   timeout: 20000,
@@ -39,16 +39,16 @@ const Tables = () => {
     date: "",
   });
 
-  // useEffect(() => {
-  //   // Listen for notifications from WebSocket server
-  //   socket.on("new_order", (data) => {
-  //     fetchData(currentPage, itemsPerPage, searchCriteria);
-  //   });
+  useEffect(() => {
+    // Listen for notifications from WebSocket server
+    socket.on("new_order", (data) => {
+      fetchData(currentPage, itemsPerPage, searchCriteria);
+    });
 
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     fetchData(currentPage, itemsPerPage, searchCriteria);
