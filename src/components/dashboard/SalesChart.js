@@ -1,7 +1,26 @@
 import { Card, CardBody, CardSubtitle, CardTitle, Row, Col } from "reactstrap";
 import Chart from "react-apexcharts";
+import { useEffect, useState } from "react";
 
 const SalesChart = () => {
+
+
+  const [salesData, setSalesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    // Fetch data from the API
+    fetch("https://tastykitchen-backend.vercel.app/orders/sales") // Replace with your actual endpoint
+      .then((response) => response.json())
+      .then((data) => {
+        setSalesData(data);
+    setLoading(false);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+
   const options = {
     chart: {
       toolbar: {
@@ -27,7 +46,7 @@ const SalesChart = () => {
         borderRadius: 2,
       },
     },
-    colors: ["#0d6efd", "#009efb", "#6771dc"],
+    colors: ["#ff2929", "#ff5959", "#ff7a7a"],
     xaxis: {
       categories: [
         "Jan",
@@ -39,6 +58,9 @@ const SalesChart = () => {
         "Jul",
         "Aug",
         "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
       ],
     },
     responsive: [
@@ -55,42 +77,43 @@ const SalesChart = () => {
       },
     ],
   };
-  const series = [
-    {
-      name: "2020",
-      data: [20, 40, 50, 30, 40, 50, 30, 30, 40],
-    },
-    {
-      name: "2022",
-      data: [10, 20, 40, 60, 20, 40, 50, 60, 20],
-    },
-  ];
 
   return (
     <Card>
+       {
+            loading === false ? (
       <CardBody>
-        <CardTitle tag="h5">Sales Summary</CardTitle>
-        <CardSubtitle className="text-muted" tag="h6">
+        {/* <CardTitle tag="h5">Sales Summary</CardTitle> */}
+        <p className="font-semibold">Sales Summary</p>
+        {/* <CardSubtitle className="text-muted" tag="h6">
           Yearly Sales Report
-        </CardSubtitle>
+        </CardSubtitle> */}
         <div className="bg-primary text-white my-3 p-3 rounded">
-          <Row>
-            <Col md="4">
-              <h6>Total Sales</h6>
-              <h4 className="mb-0 fw-bold">$10,345</h4>
+         
+              <Row>
+            <Col md="3">
+              <p className="text-sm">Total Sales</p>
+              <h4 className="mt-2 text-2xl font-bold">{salesData.yearTotalSales.toFixed(2)}€</h4>
             </Col>
-            <Col md="4">
-              <h6>This Month</h6>
-              <h4 className="mb-0 fw-bold">$7,545</h4>
+            <Col md="3">
+              <p className="text-sm">This Month</p>
+              <h4 className="mt-2 text-2xl font-bold">{salesData.monthTotalSales.toFixed(2)}€</h4>
             </Col>
-            <Col md="4">
-              <h6>This Week</h6>
-              <h4 className="mb-0 fw-bold">$1,345</h4>
+            <Col md="3">
+              <p className="text-sm">This Week</p>
+              <h4 className="mt-2 text-2xl font-bold">{salesData.weekTotalSales.toFixed(2)}€</h4>
+            </Col>
+            <Col md="3">
+              <p className="text-sm">Today</p>
+              <h4 className="mt-2 text-2xl font-bold">{salesData.dayTotalSales.toFixed(2)}€</h4>
             </Col>
           </Row>
+           
         </div>
-        <Chart options={options} series={series} type="area" height="279" />
+        <Chart options={options} series={salesData.monthlyOrderTotals} type="area" height="279" />
       </CardBody>
+       ) : (<></>)
+      }
     </Card>
   );
 };

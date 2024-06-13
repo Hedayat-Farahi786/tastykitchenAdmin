@@ -14,8 +14,8 @@ import {
   Button,
 } from "reactstrap";
 import Logo from "./Logo";
-import { ReactComponent as LogoWhite } from "../assets/images/logos/adminprowhite.svg";
 import user1 from "../assets/images/users/user4.jpg";
+import logo from "../assets/images/logos/logo.png";
 
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -31,22 +31,23 @@ const Header = () => {
   };
   return (
     <Navbar color="white" light expand="md" className="fix-header">
-      <div className="d-flex align-items-center">
+      <div className="flex items-center justify-between w-full">
         <div className="d-lg-block d-none me-5 pe-3">
-          <Logo />
+        <img src={logo} alt="logo" className="w-44 ml-5" />
         </div>
         <NavbarBrand href="/">
-          <LogoWhite className="d-lg-none" />
+          <img src={logo} alt="logo" className="w-28 md:hidden flex" />
         </NavbarBrand>
         <Button
-          color="primary"
-          className=" d-lg-none"
+          color="link"
+          size="lg"
+          className="d-lg-none text-[#e60404]"
           onClick={() => showMobilemenu()}
         >
           <i className="bi bi-list"></i>
         </Button>
       </div>
-      <div className="hstack gap-2">
+      {/* <div className="hstack gap-2">
         <Button
           color="primary"
           size="sm"
@@ -59,9 +60,9 @@ const Header = () => {
             <i className="bi bi-three-dots-vertical"></i>
           )}
         </Button>
-      </div>
+      </div> */}
 
-      <Collapse navbar isOpen={isOpen}>
+      {/* <Collapse navbar isOpen={isOpen}>
         <Nav className="me-auto" navbar>
           <NavItem>
             <Link to="/starter" className="nav-link">
@@ -84,8 +85,8 @@ const Header = () => {
               <DropdownItem>Reset</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
-        </Nav>
-        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        </Nav> */}
+        <Dropdown isOpen={dropdownOpen} toggle={toggle} className="hidden md:flex">
           <DropdownToggle color="transparent">
             <img
               src={user1}
@@ -95,16 +96,16 @@ const Header = () => {
             ></img>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem header>Info</DropdownItem>
+            {/* <DropdownItem header>Info</DropdownItem>
             <DropdownItem>My Account</DropdownItem>
             <DropdownItem>Edit Profile</DropdownItem>
             <DropdownItem divider />
             <DropdownItem>My Balance</DropdownItem>
-            <DropdownItem>Inbox</DropdownItem>
-            <DropdownItem>Logout</DropdownItem>
+            <DropdownItem>Inbox</DropdownItem> */}
+            <DropdownItem><i className="bi bi-box-arrow-left mr-2"></i> Logout</DropdownItem>
           </DropdownMenu>
         </Dropdown>
-      </Collapse>
+      {/* </Collapse> */}
     </Navbar>
   );
 };

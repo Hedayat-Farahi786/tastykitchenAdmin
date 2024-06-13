@@ -5,7 +5,12 @@ const navigation = [
   {
     title: "Dashboard",
     href: "/starter",
-    icon: "bi bi-speedometer2",
+    icon: "bi bi-columns",
+  },
+  {
+    title: "Orders",
+    href: "/orders",
+    icon: "bi bi-hdd-stack",
   },
   {
     title: "Alert",
@@ -31,11 +36,6 @@ const navigation = [
     title: "Grid",
     href: "/grid",
     icon: "bi bi-columns",
-  },
-  {
-    title: "Table",
-    href: "/table",
-    icon: "bi bi-layout-split",
   },
   {
     title: "Forms",

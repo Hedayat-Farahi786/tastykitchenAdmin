@@ -1,109 +1,120 @@
-import { Card, CardBody, CardTitle, CardSubtitle, Table } from "reactstrap";
-import user1 from "../../assets/images/users/user1.jpg";
-import user2 from "../../assets/images/users/user2.jpg";
-import user3 from "../../assets/images/users/user3.jpg";
-import user4 from "../../assets/images/users/user4.jpg";
-import user5 from "../../assets/images/users/user5.jpg";
+import React, { useEffect, useState } from "react";
+import { Card, CardBody, Table } from "reactstrap";
 
-const tableData = [
-  {
-    avatar: user1,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Flexy React",
-    status: "pending",
-    weeks: "35",
-    budget: "95K",
-  },
-  {
-    avatar: user2,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Lading pro React",
-    status: "done",
-    weeks: "35",
-    budget: "95K",
-  },
-  {
-    avatar: user3,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Elite React",
-    status: "holt",
-    weeks: "35",
-    budget: "95K",
-  },
-  {
-    avatar: user4,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Flexy React",
-    status: "pending",
-    weeks: "35",
-    budget: "95K",
-  },
-  {
-    avatar: user5,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Ample React",
-    status: "done",
-    weeks: "35",
-    budget: "95K",
-  },
-];
+import cash from "../../assets/images/cash.png";
+import credit from "../../assets/images/credit.png";
+import paypal from "../../assets/images/paypal.png";
+import io from "socket.io-client";
+
+const socket = io("https://tasty-kitchen-socket.vercel.app", {
+  transports: ["websocket", "polling"], // Explicitly use WebSocket transport
+  reconnectionAttempts: 5,
+  timeout: 20000,
+  withCredentials: true
+});
 
 const ProjectTables = () => {
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    // Listen for notifications from WebSocket server
+    socket.on("new_order", (data) => {
+      fetch("https://tastykitchen-backend.vercel.app/orders/dashboardOrders") // Replace with your actual endpoint
+        .then((response) => response.json())
+        .then((data) => setTableData(data))
+        .catch((error) => console.error("Error fetching data:", error));
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    // Fetch data from the API
+    fetch("https://tastykitchen-backend.vercel.app/orders/dashboardOrders") // Replace with your actual endpoint
+      .then((response) => response.json())
+      .then((data) => setTableData(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const formattedDate = `${date.getDate().toString().padStart(2, "0")}.${(
+      date.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}.${date.getFullYear()} - ${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+    return formattedDate;
+  }
+
   return (
     <div>
       <Card>
         <CardBody>
-          <CardTitle tag="h5">Project Listing</CardTitle>
-          <CardSubtitle className="mb-2 text-muted" tag="h6">
-            Overview of the projects
-          </CardSubtitle>
+          <div className="w-full flex items-center justify-between">
+            <p className="font-semibold">Orders</p>
+            <p className="text-sm underline cursor-pointer">
+              View All <i className="bi bi-arrow-right"></i>
+            </p>
+          </div>
 
           <Table className="no-wrap mt-3 align-middle" responsive borderless>
             <thead>
               <tr>
-                <th>Team Lead</th>
-                <th>Project</th>
-
-                <th>Status</th>
-                <th>Weeks</th>
-                <th>Budget</th>
+                <th>Order Number</th>
+                <th>Products</th>
+                <th>Note</th>
+                <th>Total Price</th>
+                <th>Payment</th>
+                <th>Customer</th>
+                {/* <th>Address</th> */}
+                <th>Time</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              {tableData.map((tdata, index) => (
+              {tableData.map((order, index) => (
                 <tr key={index} className="border-top">
+                  <td>#{order.orderNumber}</td>
                   <td>
-                    <div className="d-flex align-items-center p-2">
-                      <img
-                        src={tdata.avatar}
-                        className="rounded-circle"
-                        alt="avatar"
-                        width="45"
-                        height="45"
-                      />
-                      <div className="ms-3">
-                        <h6 className="mb-0">{tdata.name}</h6>
-                        <span className="text-muted">{tdata.email}</span>
+                    {order.products.map((product) => (
+                      <div
+                        key={product.productId._id}
+                        className="flex flex-col space-y-4"
+                      >
+                        <div>
+                          <span>{product.productId.name} </span>
+                          <span className="text-sm text-main">
+                            x{product.quantity}
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    ))}
                   </td>
-                  <td>{tdata.project}</td>
                   <td>
-                    {tdata.status === "pending" ? (
-                      <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
-                    ) : tdata.status === "holt" ? (
-                      <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
+                    {order.delivery.note !== "" ? order.delivery.note : "-"}
+                  </td>
+                  <td>{order.totalPrice.toFixed(2)}€</td>
+                  <td>
+                    {order.payment === "Barzahlung" ? (
+                      <img src={cash} alt="icon" className="w-6 ml-3" />
+                    ) : order.payment === "paypal" ? (
+                      <img src={paypal} alt="icon" className="w-6 ml-3" />
                     ) : (
-                      <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
+                      <img src={credit} alt="icon" className="w-6 ml-3" />
                     )}
                   </td>
-                  <td>{tdata.weeks}</td>
-                  <td>{tdata.budget}</td>
+
+                  <td>{order.customer.name}</td>
+                  {/* <td>{order.delivery.street} 62A, {order.delivery.postcode} München</td> */}
+                  <td>{formatDate(order.time)}</td>
+                  <td>
+                    <i className="bi bi-chevron-double-right text-main text-lg cursor-pointer"></i>
+                  </td>
                 </tr>
               ))}
             </tbody>
