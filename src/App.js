@@ -14,32 +14,32 @@ const socket = io("https://tasty-kitchen-socket.vercel.app", {
 const App = () => {
   const [playNotification, setPlayNotification] = useState(false);
 
-  useEffect(() => {
-    socket.on("new_order", (message) => {
-      console.log("New order received:", message);
-      setPlayNotification(true);
-    });
+  // useEffect(() => {
+  //   socket.on("new_order", (message) => {
+  //     console.log("New order received:", message);
+  //     setPlayNotification(true);
+  //   });
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    if (playNotification) {
-      const audio = new Audio(notificationSound);
-      audio
-        .play()
-        .then(() => {
-          console.log("Audio played successfully");
-          setPlayNotification(false); // Reset playNotification after successful playback
-        })
-        .catch((error) => {
-          console.error("Error playing audio:", error);
-          setPlayNotification(false); // Reset playNotification on error as well
-        });
-    }
-  }, [playNotification]);
+  // useEffect(() => {
+  //   if (playNotification) {
+  //     const audio = new Audio(notificationSound);
+  //     audio
+  //       .play()
+  //       .then(() => {
+  //         console.log("Audio played successfully");
+  //         setPlayNotification(false); // Reset playNotification after successful playback
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error playing audio:", error);
+  //         setPlayNotification(false); // Reset playNotification on error as well
+  //       });
+  //   }
+  // }, [playNotification]);
 
   const routing = useRoutes(Themeroutes);
 

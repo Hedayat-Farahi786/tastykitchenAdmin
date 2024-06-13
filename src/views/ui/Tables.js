@@ -39,16 +39,16 @@ const Tables = () => {
     date: "",
   });
 
-  useEffect(() => {
-    // Listen for notifications from WebSocket server
-    socket.on("new_order", (data) => {
-      fetchData(currentPage, itemsPerPage, searchCriteria);
-    });
+  // useEffect(() => {
+  //   // Listen for notifications from WebSocket server
+  //   socket.on("new_order", (data) => {
+  //     fetchData(currentPage, itemsPerPage, searchCriteria);
+  //   });
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   useEffect(() => {
     fetchData(currentPage, itemsPerPage, searchCriteria);
