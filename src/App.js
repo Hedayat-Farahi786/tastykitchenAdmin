@@ -43,7 +43,7 @@ const App = () => {
 
   const routing = useRoutes(Themeroutes);
 
-  return <div className="dark">{routing}</div>;
+  return <div>{routing}</div>;
 };
 
 export default App;

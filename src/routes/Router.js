@@ -13,9 +13,9 @@ const Badges = lazy(() => import("../views/ui/Badges"));
 const Buttons = lazy(() => import("../views/ui/Buttons"));
 const Cards = lazy(() => import("../views/ui/Cards"));
 const Grid = lazy(() => import("../views/ui/Grid"));
-const Tables = lazy(() => import("../views/ui/Tables"));
+const Orders = lazy(() => import("../views/ui/Orders.js"));
 const Forms = lazy(() => import("../views/ui/Forms"));
-const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
+const OrderDetail = lazy(() => import("../views/ui/OrderDetail.js"));
 
 /*****Routes******/
 
@@ -32,9 +32,9 @@ const ThemeRoutes = [
       { path: "/buttons", exact: true, element: <Buttons /> },
       { path: "/cards", exact: true, element: <Cards /> },
       { path: "/grid", exact: true, element: <Grid /> },
-      { path: "/orders", exact: true, element: <Tables /> },
+      { path: "/orders", exact: true, element: <Orders /> },
+      { path: "/orders/:orderNumber", exact: true, element: <OrderDetail /> },
       { path: "/forms", exact: true, element: <Forms /> },
-      { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },
     ],
   },
 ];
