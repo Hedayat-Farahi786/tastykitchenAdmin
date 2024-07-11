@@ -9,11 +9,11 @@ import "./index.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Suspense fallback={<Loader />}>
+  // <Suspense fallback={<Loader />}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Suspense>
+  // </Suspense>
 );
 
 // If you want to start measuring performance in your app, pass a function
