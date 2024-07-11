@@ -26,7 +26,7 @@ const ThemeRoutes = [
     path: "/",
     element: <AuthLayout />,
     children: [
-      { path: "/", element: <Navigate to="/login" /> },
+      { path: "/", exact: true, element: <Navigate to="/login" /> },
       { path: "/login", exact: true, element: <Login /> },
       { path: "/register", exact: true, element: <Register /> },
       { path: "/forgot-password", exact: true, element: <ForgotPassword /> },
