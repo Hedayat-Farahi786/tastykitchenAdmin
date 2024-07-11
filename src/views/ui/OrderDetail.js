@@ -145,18 +145,18 @@ const OrderDetail = () => {
                         <p className="mb-2 text-xl font-semibold">Products</p>
                         <ListGroup>
                           {order.products.map((product) => (
-                            <ListGroupItem key={product.productId._id}>
+                            <ListGroupItem key={product.productId?._id}>
                               <div className="w-full flex items-center justify-between">
                                 <div className="flex items-center space-x-5">
                                   <div className="flex items-center space-x-5">
                                     <img
                                       className="w-16 h-16 rounded"
                                       style={{ objectFit: "cover" }}
-                                      src={product.productId.image}
-                                      alt={product.productId.name}
+                                      src={product.productId?.image}
+                                      alt={product.productId?.name}
                                     />
                                     <p className="text-lg">
-                                      <span>{product.productId.name}</span>{" "}
+                                      <span>{product.productId?.name}</span>{" "}
                                       <span className="text-main">
                                         x{product.quantity}
                                       </span>

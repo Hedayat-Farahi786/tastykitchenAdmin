@@ -229,11 +229,11 @@ const Orders = () => {
                       <td>
                         {order.products.map((product) => (
                           <div
-                            key={product.productId._id}
+                            key={product.productId?._id}
                             className="flex flex-col space-y-4"
                           >
                             <div>
-                              <span>{product.productId.name} </span>
+                              <span>{product.productId?.name} </span>
                               <span className="text-sm text-main">
                                 x{product.quantity}
                               </span>

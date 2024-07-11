@@ -1,11 +1,12 @@
 import { useRoutes } from "react-router-dom";
-import Themeroutes from "./routes/Router";
+import ThemeRoutes from "./routes/Router";
+import { AuthProvider } from "./AuthContext";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import notificationSound from "./assets/notification.mp3";
 
 const socket = io("http://localhost:5000", {
-  transports: ["websocket", "polling"], // Explicitly use WebSocket transport
+  transports: ["websocket", "polling"],
   reconnectionAttempts: 5,
   timeout: 20000,
   withCredentials: true,
@@ -32,18 +33,18 @@ const App = () => {
         .play()
         .then(() => {
           console.log("Audio played successfully");
-          setPlayNotification(false); // Reset playNotification after successful playback
+          setPlayNotification(false);
         })
         .catch((error) => {
           console.error("Error playing audio:", error);
-          setPlayNotification(false); // Reset playNotification on error as well
+          setPlayNotification(false);
         });
     }
   }, [playNotification]);
 
-  const routing = useRoutes(Themeroutes);
+  const routing = useRoutes(ThemeRoutes);
 
-  return <div>{routing}</div>;
+  return <AuthProvider>{routing}</AuthProvider>;
 };
 
 export default App;

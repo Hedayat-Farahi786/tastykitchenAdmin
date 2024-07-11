@@ -13,39 +13,39 @@ const navigation = [
     icon: "bi bi-hdd-stack",
   },
   {
-    title: "Alert",
-    href: "/alerts",
-    icon: "bi bi-bell",
+    title: "Products",
+    href: "/products",
+    icon: "bi bi-grid",
   },
   {
-    title: "Badges",
-    href: "/badges",
-    icon: "bi bi-patch-check",
-  },
-  {
-    title: "Buttons",
-    href: "/buttons",
+    title: "Categories",
+    href: "/categories",
     icon: "bi bi-hdd-stack",
   },
+  // {
+  //   title: "Badges",
+  //   href: "/badges",
+  //   icon: "bi bi-patch-check",
+  // },
+  // {
+  //   title: "Cards",
+  //   href: "/cards",
+  //   icon: "bi bi-card-text",
+  // },
+  // {
+  //   title: "Grid",
+  //   href: "/grid",
+  //   icon: "bi bi-columns",
+  // },
   {
-    title: "Cards",
-    href: "/cards",
-    icon: "bi bi-card-text",
-  },
-  {
-    title: "Grid",
-    href: "/grid",
-    icon: "bi bi-columns",
-  },
-  {
-    title: "Forms",
-    href: "/forms",
-    icon: "bi bi-textarea-resize",
-  },
-  {
-    title: "About",
-    href: "/about",
+    title: "Testimonials",
+    href: "/testimonials",
     icon: "bi bi-people",
+  },
+  {
+    title: "Contact",
+    href: "/contacts",
+    icon: "bi bi-textarea-resize",
   },
 ];
 

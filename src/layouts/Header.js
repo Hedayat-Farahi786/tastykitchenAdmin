@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Collapse,
@@ -16,11 +16,23 @@ import {
 import Logo from "./Logo";
 import user1 from "../assets/images/users/user4.jpg";
 import logo from "../assets/images/logos/logo.png";
+import { AuthContext } from "../AuthContext";
+import decodeToken from "../tokenUtils";
 
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+
+  const [tokenData, setTokenData] = React.useState(null);
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('token'); // Assuming the token is stored in local storage
+    if (token) {
+      const decoded = decodeToken(token);
+      setTokenData(decoded);
+    }
+  }, []);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
@@ -29,6 +41,15 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
+
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // Redirect to the login page after logout
+  };
+
   return (
     <Navbar color="white" light expand="md" className="fix-header">
       <div className="flex items-center justify-between w-full">
@@ -86,6 +107,11 @@ const Header = () => {
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav> */}
+            {
+              tokenData && (
+                <p className="text-sm">{tokenData.username}</p>
+              )
+            }
         <Dropdown isOpen={dropdownOpen} toggle={toggle} className="hidden md:flex">
           <DropdownToggle color="transparent">
             <img
@@ -102,7 +128,7 @@ const Header = () => {
             <DropdownItem divider />
             <DropdownItem>My Balance</DropdownItem>
             <DropdownItem>Inbox</DropdownItem> */}
-            <DropdownItem><i className="bi bi-box-arrow-left mr-2"></i> Logout</DropdownItem>
+            <DropdownItem onClick={handleLogout}><i className="bi bi-box-arrow-left mr-2"></i> Logout</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       {/* </Collapse> */}
