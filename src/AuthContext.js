@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     if (token) {
       axios
-        .get("http://localhost:4000/auth/validate", {
+        .get("https://tastykitchen-backend.vercel.app/auth/validate", {
           headers: { Authorization: token },
         })
         .then(() => {

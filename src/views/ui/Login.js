@@ -2,7 +2,17 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../../AuthContext";
 import logo from "../../assets/images/logos/logo.png";
-import { Card, CardBody, CardTitle, Alert, Form, FormGroup, Label, Input, Button } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Alert,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+} from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -24,7 +34,10 @@ export default function Login() {
     setErrorMessage("");
     setSuccessMessage("");
     try {
-      const response = await axios.post("http://localhost:4000/auth/login", { username: email.toLowerCase(), password });
+      const response = await axios.post(
+        "https://tastykitchen-backend.vercel.app/auth/login",
+        { username: email.toLowerCase(), password }
+      );
       login(response.data.token);
       setSuccessMessage("Login successful!");
       navigate("/starter");
@@ -41,9 +54,9 @@ export default function Login() {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <Card>
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 mb-5">
-          Sign in to your account
-        </h2>
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 mb-5">
+            Sign in to your account
+          </h2>
           <CardBody>
             <p></p>
             {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
@@ -76,16 +89,12 @@ export default function Login() {
                 />
               </FormGroup>
               <div className="flex items-center justify-end">
-              <Link to="/forgot-password" className="text-sm">
-    Forgot password?
-  </Link>
+                <Link to="/forgot-password" className="text-sm">
+                  Forgot password?
+                </Link>
               </div>
               <div className="mt-4">
-                <Button
-                  type="submit"
-                  color="primary"
-                  className="w-full"
-                >
+                <Button type="submit" color="primary" className="w-full">
                   Sign in
                 </Button>
               </div>

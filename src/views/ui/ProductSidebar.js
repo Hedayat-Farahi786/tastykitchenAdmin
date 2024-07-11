@@ -18,7 +18,7 @@ const ProductSidebar = ({ closeSidebar, editProduct }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:4000/categories") // Adjust the endpoint as needed
+    fetch("https://tastykitchen-backend.vercel.app/categories") // Adjust the endpoint as needed
       .then((response) => response.json())
       .then((data) => setCategories(data));
   }, []);
@@ -74,7 +74,8 @@ const ProductSidebar = ({ closeSidebar, editProduct }) => {
     if (!form.name) formErrors.name = "Name is required";
     // if (!form.description) formErrors.description = "Description is required";
     if (!form.image) formErrors.image = "Image URL is required";
-    if (!form.optionsTitle) formErrors.optionsTitle = "Options title is required";
+    if (!form.optionsTitle)
+      formErrors.optionsTitle = "Options title is required";
     // if (form.options.length === 0) formErrors.options = "At least one option is required";
     if (!form.menuId) formErrors.menuId = "Category is required";
     setErrors(formErrors);
@@ -86,8 +87,10 @@ const ProductSidebar = ({ closeSidebar, editProduct }) => {
 
     setLoading(true);
     const method = editProduct ? "PUT" : "POST";
-    const url = editProduct ? `http://localhost:4000/products/${editProduct._id}` : "http://localhost:4000/products";
-    if(!editProduct){
+    const url = editProduct
+      ? `https://tastykitchen-backend.vercel.app/products/${editProduct._id}`
+      : "https://tastykitchen-backend.vercel.app/products";
+    if (!editProduct) {
       form.visible = true;
     }
     fetch(url, {
@@ -109,7 +112,10 @@ const ProductSidebar = ({ closeSidebar, editProduct }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-end" onClick={closeSidebar}>
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-end"
+      onClick={closeSidebar}
+    >
       <div
         className="bg-white w-1/3 h-full p-4 overflow-y-scroll pb-5 relative"
         onClick={(e) => e.stopPropagation()} // Prevents click event from closing sidebar when clicking inside
@@ -124,7 +130,11 @@ const ProductSidebar = ({ closeSidebar, editProduct }) => {
           {editProduct ? "Edit Product" : "Add New Product"}
         </h2>
         <div className="w-full flex items-center justify-center mb-4">
-          <img src={imageUrl} className="w-60 rounded-md border" alt="product" />
+          <img
+            src={imageUrl}
+            className="w-60 rounded-md border"
+            alt="product"
+          />
         </div>
         <label className="block mb-2">Product Name</label>
         <input
@@ -156,7 +166,9 @@ const ProductSidebar = ({ closeSidebar, editProduct }) => {
           onChange={(e) => handleChange("optionsTitle", e.target.value)}
           className="w-full mb-4 p-2 border rounded"
         />
-        {errors.optionsTitle && <p className="text-red-500 text-sm">{errors.optionsTitle}</p>}
+        {errors.optionsTitle && (
+          <p className="text-red-500 text-sm">{errors.optionsTitle}</p>
+        )}
         <label className="block mb-2">Options</label>
         {form.options.map((option, index) => (
           <div key={index} className="flex mb-2">
@@ -178,7 +190,10 @@ const ProductSidebar = ({ closeSidebar, editProduct }) => {
               }
               className="w-1/2 p-2 border rounded"
             />
-            <Button className="ml-2 btn btn-danger" onClick={() => removeOption(index)}>
+            <Button
+              className="ml-2 btn btn-danger"
+              onClick={() => removeOption(index)}
+            >
               <i className="bi bi-trash"></i>
             </Button>
           </div>
@@ -201,10 +216,22 @@ const ProductSidebar = ({ closeSidebar, editProduct }) => {
           ))}
         </select>
         <div className="mb-5">
-        {errors.menuId && <p className="text-red-500 text-sm">{errors.menuId}</p>}
+          {errors.menuId && (
+            <p className="text-red-500 text-sm">{errors.menuId}</p>
+          )}
         </div>
-        <Button className="btn btn-success w-full" onClick={handleSubmit} disabled={loading}>
-          {loading ? <Spinner size="sm" /> : <><i className="bi bi-plus-lg mr-2"></i>Submit</>}
+        <Button
+          className="btn btn-success w-full"
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? (
+            <Spinner size="sm" />
+          ) : (
+            <>
+              <i className="bi bi-plus-lg mr-2"></i>Submit
+            </>
+          )}
         </Button>
       </div>
     </div>

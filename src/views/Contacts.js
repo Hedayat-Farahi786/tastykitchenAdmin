@@ -23,7 +23,7 @@ const Contacts = () => {
 
   const fetchContacts = () => {
     setLoading(true);
-    fetch("http://localhost:4000/contacts")
+    fetch("https://tastykitchen-backend.vercel.app/contacts")
       .then((response) => response.json())
       .then((data) => {
         setContacts(data);
@@ -44,16 +44,18 @@ const Contacts = () => {
   );
 
   const handleDownload = () => {
-    const csvData = contacts.map(contact => ({
+    const csvData = contacts.map((contact) => ({
       Name: contact.name,
       Email: contact.email,
       Message: contact.message,
-      CreatedAt: new Date(contact.createdAt).toLocaleString()
+      CreatedAt: new Date(contact.createdAt).toLocaleString(),
     }));
 
-    const csvContent = "data:text/csv;charset=utf-8,"
-      + Object.keys(csvData[0]).join(",") + "\n"
-      + csvData.map(e => Object.values(e).join(",")).join("\n");
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      Object.keys(csvData[0]).join(",") +
+      "\n" +
+      csvData.map((e) => Object.values(e).join(",")).join("\n");
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -80,7 +82,10 @@ const Contacts = () => {
   return (
     <Row>
       {loading ? (
-        <div role="status" className="w-full p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700">
+        <div
+          role="status"
+          className="w-full p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
+        >
           <span className="sr-only">Loading...</span>
         </div>
       ) : (
@@ -90,12 +95,16 @@ const Contacts = () => {
               <div className="flex items-center justify-between pb-4">
                 <p className="font-bold text-2xl">Contact Information</p>
                 <div className="flex space-x-4">
-                  <Button className="px-4" color="success" onClick={handleDownload}>
+                  <Button
+                    className="px-4"
+                    color="success"
+                    onClick={handleDownload}
+                  >
                     <i className="bi bi-download mr-2"></i> Download
                   </Button>
                 </div>
               </div>
-          <div className="w-full bg-gray-300 h-[1px] mb-4"></div>
+              <div className="w-full bg-gray-300 h-[1px] mb-4"></div>
 
               <Form className="pb-4">
                 <FormGroup className="flex flex-col justify-end h-full">

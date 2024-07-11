@@ -1,22 +1,34 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Alert, Form, FormGroup, Label, Input, Button, Card, CardBody } from "reactstrap";
+import {
+  Alert,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Card,
+  CardBody,
+} from "reactstrap";
 
 export default function ResetPassword() {
   const { token } = useParams();
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:4000/auth/reset-password/${token}`, { newPassword });
+      const response = await axios.post(
+        `https://tastykitchen-backend.vercel.app/auth/reset-password/${token}`,
+        { newPassword }
+      );
       setMessage(response.data);
       setError("");
-        navigate("/login");
+      navigate("/login");
     } catch (error) {
       setError("Error resetting password");
       setMessage("");
@@ -49,11 +61,7 @@ export default function ResetPassword() {
                 />
               </FormGroup>
               <div className="mt-4">
-                <Button
-                  type="submit"
-                  color="primary"
-                  className="w-full"
-                >
+                <Button type="submit" color="primary" className="w-full">
                   Reset Password
                 </Button>
               </div>

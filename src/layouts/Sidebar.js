@@ -47,6 +47,11 @@ const navigation = [
     href: "/contacts",
     icon: "bi bi-textarea-resize",
   },
+  {
+    title: "Users",
+    href: "/users",
+    icon: "bi bi-shield-lock",
+  },
 ];
 
 const Sidebar = () => {

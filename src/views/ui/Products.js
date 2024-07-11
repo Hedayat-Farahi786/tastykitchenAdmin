@@ -35,7 +35,7 @@ const Products = () => {
 
   const fetchProducts = () => {
     setLoading(true);
-    fetch("http://localhost:4000/products")
+    fetch("https://tastykitchen-backend.vercel.app/products")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -75,13 +75,13 @@ const Products = () => {
 
   const handleDelete = (product) => {
     setModalProduct(product);
-    setModalAction('delete');
+    setModalAction("delete");
     toggleModal();
   };
 
   const handleToggleVisible = (product) => {
     setModalProduct(product);
-    setModalAction('toggleVisible');
+    setModalAction("toggleVisible");
     toggleModal();
   };
 
@@ -89,12 +89,12 @@ const Products = () => {
     setProcessing(true);
     let url, method;
 
-    if (modalAction === 'delete') {
-      url = `http://localhost:4000/products/${modalProduct._id}`;
-      method = 'DELETE';
-    } else if (modalAction === 'toggleVisible') {
-      url = `http://localhost:4000/products/${modalProduct._id}/toggleVisible`;
-      method = 'PUT';
+    if (modalAction === "delete") {
+      url = `https://tastykitchen-backend.vercel.app/products/${modalProduct._id}`;
+      method = "DELETE";
+    } else if (modalAction === "toggleVisible") {
+      url = `https://tastykitchen-backend.vercel.app/products/${modalProduct._id}/toggleVisible`;
+      method = "PUT";
     }
 
     fetch(url, { method })
@@ -140,17 +140,28 @@ const Products = () => {
             <Button className="flex-1 mr-2" onClick={() => handleEdit(product)}>
               <i className="bi bi-pencil-square mr-2"></i> Edit
             </Button>
-            <Button className={`mx-2 ${product.visible ? 'btn-success' : 'btn-warning'}`}  onClick={() => handleToggleVisible(product)}>
-             
-              {
-                product.visible ? (
-                  <div> <i className="bi bi-eye"></i></div>
-                ) : (
-                  <div> <i className="bi bi-eye-slash"></i></div>
-                )
-              }
+            <Button
+              className={`mx-2 ${
+                product.visible ? "btn-success" : "btn-warning"
+              }`}
+              onClick={() => handleToggleVisible(product)}
+            >
+              {product.visible ? (
+                <div>
+                  {" "}
+                  <i className="bi bi-eye"></i>
+                </div>
+              ) : (
+                <div>
+                  {" "}
+                  <i className="bi bi-eye-slash"></i>
+                </div>
+              )}
             </Button>
-            <Button className="ml-2 btn-danger" onClick={() => handleDelete(product)}>
+            <Button
+              className="ml-2 btn-danger"
+              onClick={() => handleDelete(product)}
+            >
               <i className="bi bi-trash"></i>
             </Button>
           </div>
@@ -192,7 +203,12 @@ const Products = () => {
         <Card>
           <div className="flex items-center justify-between px-4 py-3">
             <CardTitle>
-              <p className="text-2xl font-semibold">Products <span className="text-sm text-gray-400 font-semibold ml-2">GESMAT: <span className="text-main">{products.length}</span></span></p>
+              <p className="text-2xl font-semibold">
+                Products{" "}
+                <span className="text-sm text-gray-400 font-semibold ml-2">
+                  GESMAT: <span className="text-main">{products.length}</span>
+                </span>
+              </p>
             </CardTitle>
             <div className="flex items-center space-x-4">
               <Input
@@ -258,12 +274,18 @@ const Products = () => {
       )}
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>
-          {modalAction === 'delete' ? 'Confirm Delete' : 'Confirm Toggle Visibility'}
+          {modalAction === "delete"
+            ? "Confirm Delete"
+            : "Confirm Toggle Visibility"}
         </ModalHeader>
         <ModalBody>
-          {modalAction === 'delete'
-            ? `Are you sure you want to delete the product: ${modalProduct && modalProduct.name}?`
-            : `Are you sure you want to ${modalProduct && modalProduct.visible ? 'hide' : 'show'} the product: ${modalProduct && modalProduct.name}?`}
+          {modalAction === "delete"
+            ? `Are you sure you want to delete the product: ${
+                modalProduct && modalProduct.name
+              }?`
+            : `Are you sure you want to ${
+                modalProduct && modalProduct.visible ? "hide" : "show"
+              } the product: ${modalProduct && modalProduct.name}?`}
         </ModalBody>
         <ModalFooter>
           <Button color="danger" onClick={confirmAction} disabled={processing}>

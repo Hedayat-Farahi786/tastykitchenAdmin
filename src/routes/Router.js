@@ -5,6 +5,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import FullLayout from "../layouts/FullLayout";
 import ForgotPassword from "../views/ui/ForgotPassword.js";
 import ResetPassword from "../views/ui/ResetPassword.js";
+import Users from "../views/ui/Users.js";
 
 /***** Pages ****/
 const Starter = lazy(() => import("../views/Starter.js"));
@@ -25,6 +26,7 @@ const ThemeRoutes = [
     path: "/",
     element: <AuthLayout />,
     children: [
+      { path: "/", element: <Navigate to="/login" /> },
       { path: "/login", exact: true, element: <Login /> },
       { path: "/register", exact: true, element: <Register /> },
       { path: "/forgot-password", exact: true, element: <ForgotPassword /> },
@@ -38,6 +40,7 @@ const ThemeRoutes = [
       { path: "/", element: <Navigate to="/starter" /> },
       { path: "/starter", exact: true, element: <ProtectedRoute><Starter /></ProtectedRoute> },
       { path: "/contacts", exact: true, element: <ProtectedRoute><Contacts /></ProtectedRoute> },
+      { path: "/users", exact: true, element: <ProtectedRoute><Users /></ProtectedRoute> },
       { path: "/products", exact: true, element: <ProtectedRoute><Products /></ProtectedRoute> },
       { path: "/categories", exact: true, element: <ProtectedRoute><Categories /></ProtectedRoute> },
       { path: "/cards", exact: true, element: <ProtectedRoute><Cards /></ProtectedRoute> },

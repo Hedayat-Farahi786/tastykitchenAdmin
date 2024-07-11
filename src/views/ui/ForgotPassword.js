@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Alert, Form, FormGroup, Label, Input, Button, Card, CardBody } from "reactstrap";
+import {
+  Alert,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Card,
+  CardBody,
+} from "reactstrap";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -10,7 +19,10 @@ export default function ForgotPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/auth/forgot-password", { username: email.toLowerCase() });
+      const response = await axios.post(
+        "https://tastykitchen-backend.vercel.app/auth/forgot-password",
+        { username: email.toLowerCase() }
+      );
       setMessage(response.data);
       setError("");
     } catch (error) {
@@ -45,11 +57,7 @@ export default function ForgotPassword() {
                 />
               </FormGroup>
               <div className="mt-4">
-                <Button
-                  type="submit"
-                  color="primary"
-                  className="w-full"
-                >
+                <Button type="submit" color="primary" className="w-full">
                   Send Reset Link
                 </Button>
               </div>

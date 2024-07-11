@@ -43,7 +43,7 @@ const Categories = () => {
 
   const fetchCategories = () => {
     setLoading(true);
-    fetch("http://localhost:4000/categories")
+    fetch("https://tastykitchen-backend.vercel.app/categories")
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
@@ -129,7 +129,7 @@ const Categories = () => {
   };
 
   const handleAddCategory = () => {
-    fetch("http://localhost:4000/categories", {
+    fetch("https://tastykitchen-backend.vercel.app/categories", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -146,13 +146,16 @@ const Categories = () => {
   };
 
   const handleEditCategory = () => {
-    fetch(`http://localhost:4000/categories/${currentCategory._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(currentCategory),
-    })
+    fetch(
+      `https://tastykitchen-backend.vercel.app/categories/${currentCategory._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(currentCategory),
+      }
+    )
       .then((response) => response.json())
       .then(() => {
         fetchCategories();
@@ -163,9 +166,12 @@ const Categories = () => {
 
   const handleDeleteCategory = () => {
     setDeleting(true);
-    fetch(`http://localhost:4000/categories/${categoryToDelete._id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://tastykitchen-backend.vercel.app/categories/${categoryToDelete._id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => response.json())
       .then(() => {
         fetchCategories();
@@ -228,37 +234,39 @@ const Categories = () => {
                         {category.name}
                       </p>
                       <p className="text-gray-500 mb-2 text-sm">
-                        {category.description} 
+                        {category.description}
                       </p>
                       {category.extras.length > 0 && (
                         <>
-                        <p className="mt-3 mb-1 uppercase text-main text-sm">Extras:</p>
-                        <div>
-                          {expandedCategories[category._id]
-                            ? category.extras.map((extra) => (
-                                <div
-                                  key={extra._id}
-                                  className="w-full flex items-center justify-between text-sm border px-2 py-1 rounded-md mb-2"
-                                >
-                                  <p>{extra.name}</p>
-                                  <p className="text-main font-semibold">
-                                    {extra.price.toFixed(2)} €
-                                  </p>
-                                </div>
-                              ))
-                            : category.extras.slice(0, 5).map((extra) => (
-                                <div
-                                  key={extra._id}
-                                  className="w-full flex items-center justify-between text-sm border px-2 py-1 rounded-md mb-2"
-                                >
-                                  <p>{extra.name}</p>
-                                  <p className="text-main font-semibold">
-                                    {extra.price.toFixed(2)} €
-                                  </p>
-                                </div>
-                              ))}
-                        </div>
-                       </>
+                          <p className="mt-3 mb-1 uppercase text-main text-sm">
+                            Extras:
+                          </p>
+                          <div>
+                            {expandedCategories[category._id]
+                              ? category.extras.map((extra) => (
+                                  <div
+                                    key={extra._id}
+                                    className="w-full flex items-center justify-between text-sm border px-2 py-1 rounded-md mb-2"
+                                  >
+                                    <p>{extra.name}</p>
+                                    <p className="text-main font-semibold">
+                                      {extra.price.toFixed(2)} €
+                                    </p>
+                                  </div>
+                                ))
+                              : category.extras.slice(0, 5).map((extra) => (
+                                  <div
+                                    key={extra._id}
+                                    className="w-full flex items-center justify-between text-sm border px-2 py-1 rounded-md mb-2"
+                                  >
+                                    <p>{extra.name}</p>
+                                    <p className="text-main font-semibold">
+                                      {extra.price.toFixed(2)} €
+                                    </p>
+                                  </div>
+                                ))}
+                          </div>
+                        </>
                       )}
                       {category.extras.length > 5 && (
                         <Button
@@ -275,7 +283,7 @@ const Categories = () => {
                           className="flex-1"
                           onClick={() => handleEditButtonClick(category)}
                         >
-                           <i className="bi bi-pencil-square mr-2"></i>Edit
+                          <i className="bi bi-pencil-square mr-2"></i>Edit
                         </Button>
                         <Button
                           color="danger"
@@ -356,7 +364,7 @@ const Categories = () => {
                     </Row>
                   ))}
                   <Button onClick={() => addExtraField()}>
-                  <i className="bi bi-plus-circle mr-2"></i> Add Extra
+                    <i className="bi bi-plus-circle mr-2"></i> Add Extra
                   </Button>
                 </Form>
               </ModalBody>
@@ -440,7 +448,7 @@ const Categories = () => {
                     </Row>
                   ))}
                   <Button onClick={() => addExtraField(true)}>
-                  <i className="bi bi-plus-circle mr-2"></i> Add Extra
+                    <i className="bi bi-plus-circle mr-2"></i> Add Extra
                   </Button>
                 </Form>
               </ModalBody>
