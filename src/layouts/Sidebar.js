@@ -77,6 +77,7 @@ const Sidebar = () => {
             <NavItem key={index} className="sidenav-bg">
               <Link
                 to={navi.href}
+                onClick={()=> window.location.reload()}
                 className={
                   location.pathname === navi.href
                     ? "active nav-link py-3"
