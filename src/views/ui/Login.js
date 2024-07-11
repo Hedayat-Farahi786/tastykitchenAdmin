@@ -41,6 +41,7 @@ export default function Login() {
       login(response.data.token);
       setSuccessMessage("Login successful!");
       navigate("/starter");
+      window.location.reload();
     } catch (error) {
       setErrorMessage("Invalid email or password.");
     }
