@@ -3,17 +3,17 @@ import "./assets/scss/style.scss";
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, HashRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import Loader from "./layouts/loader/Loader";
 import "./index.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <Suspense fallback={<Loader />}>
-    <BrowserRouter>
+  <Suspense fallback={<Loader />}>
+    <HashRouter>
       <App />
-    </BrowserRouter>
-  // </Suspense>
+    </HashRouter>
+  </Suspense>
 );
 
 // If you want to start measuring performance in your app, pass a function
